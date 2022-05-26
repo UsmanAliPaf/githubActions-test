@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,7 +26,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: echo "Runs at the moment on ${{ matrix.node-version }} or $matrix.node-version" 
+    if: ${{ npm ls react == 'refs/heads/main' }}
+    - run: echo "Runs at the moment on ${{ matrix.node-version }}" 
+    - run: node -v
     - run: npm ci
-    - run: npm run build --if-present
+    - run: npm uninstall react --if-present
+    - run: npm install react
     - run: npm test
