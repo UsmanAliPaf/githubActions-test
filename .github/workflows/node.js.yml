@@ -24,7 +24,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    if: ${{ npm ls react == 'refs/heads/main' }}
     - run: echo "Runs at the moment on ${{ matrix.node-version }}" 
     - run: node -v
     - run: npm ci
